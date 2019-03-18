@@ -1,20 +1,6 @@
-<<<<<<< HEAD
-# ESP8266-Home
-=======
-# ESP8266_NONOS_SDK
+当Station连接上AP时，蓝灯会灭，否则常亮
+这个程序是属于第二种
 
-All documentations @ http://espressif.com/en/support/download/documents?keys=&field_type_tid%5B%5D=14
-
-
-## Notes ##
-Please add `user_pre_init()` in your project, which will be called before `user_init()`. And you MUST call `system_partition_table_regist()` in `user_pre_init` to register your project partition table.  
-
-The following partition address CAN NOT be modified, and you MUST give the correct address. They are retated to the flash map, please refer to [ESP8266 SDK Getting Started Guide](https://www.espressif.com/sites/default/files/documentation/2a-esp8266-sdk_getting_started_guide_en.pdf) or [ESP8266 SDK 入门指南](https://www.espressif.com/sites/default/files/documentation/2a-esp8266-sdk_getting_started_guide_cn.pdf).  
-  
-- SYSTEM\_PARTITION\_BOOTLOADER  
-- SYSTEM\_PARTITION\_OTA_1  
-- SYSTEM\_PARTITION\_OTA_2  
-- SYSTEM\_PARTITION\_SYSTEM_PARAMETER  
-
-If you donot use Non-FOTA bin, eagle.irom0.text.bin and irom0.text MUST be downloaded the fixed address, which also can be found in [ESP8266 SDK Getting Started Guide](https://www.espressif.com/sites/default/files/documentation/2a-esp8266-sdk_getting_started_guide_en.pdf) or [ESP8266 SDK 入门指南](https://www.espressif.com/sites/default/files/documentation/2a-esp8266-sdk_getting_started_guide_cn.pdf), and you can define their partition type after `SYSTEM_PARTITION_CUSTOMER_BEGIN`.
->>>>>>> first commit ,there is a pwm bug
+第一种：两个ESP8266,一个作AP放出wifi，另一个作station连接wifi，AP UDP的目标地址恒为192.168.4.1 port：1025，然后两个WiFi都以波特率为1000000的串口提供透传，第一次station必须先发一个数据包给AP，AP才可确定通讯IP，AP最大可以连入4个wifi设备
+	
+第二种：一个ESP8266,既使用AP，也使用station，AP默认放出热点为BBA's_AP,密码123123123，用作设置目标路由器WiFi和密码，新增连接AP也可以透传，一旦设置后，便自动保存到Flash，下一次自动连接，连接上后可以通过向AP发送指令获取station获取到的IP地址。ESP8266的设置IP为192.168.4.1 port：1026 透传IP：AP:192.68 port：1026或者Station：通过指令获取(192.168.31.80) port:1025，Station、AP透传端口为1025，AP设置端口为1026
